@@ -8,12 +8,13 @@
         <id column="id" property="id"/>
         <result column="username" property="username"/>
         <result column="password" property="password"/>
+        <result column="email" property="email"/>
     </resultMap>
 
     <!-- 新增用户 -->
     <insert id="insert" useGeneratedKeys="true" keyProperty="user.id">
-        INSERT INTO user (username, password)
-        VALUES (#{user.username}, #{user.password})
+        INSERT INTO user (username, password, email)
+        VALUES (#{user.username}, #{user.password}, #{user.email})
     </insert>
 
     <!-- 根据ID删除用户 -->
@@ -38,6 +39,9 @@
             </if>
             <if test="user.password != null and user.password != ''">
                 password = #{user.password}
+            </if>
+            <if test="user.email != null and user.email != ''">
+                email = #{user.email}
             </if>
         </set>
         WHERE id = #{user.id}
@@ -66,6 +70,9 @@
             </if>
             <if test="user.password != null and user.password != ''">
                 AND password = #{user.password}
+            </if>
+            <if test="user.email != null and user.email != ''">
+                AND email = #{user.email}
             </if>
         </where>
     </select>

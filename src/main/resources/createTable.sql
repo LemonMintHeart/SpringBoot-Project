@@ -5,7 +5,8 @@ USE springboot_learning;
 CREATE TABLE user (
     id INT AUTO_INCREMENT PRIMARY KEY COMMENT '用户ID',
     username VARCHAR(20) NOT NULL UNIQUE COMMENT '用户名（唯一）',
-    password VARCHAR(20) NOT NULL COMMENT '密码'
+    password VARCHAR(20) NOT NULL COMMENT '密码',
+    email VARCHAR(50) NOT NULL COMMENT '用户邮箱'
 ) COMMENT='用户表';
 
 -- 部门表

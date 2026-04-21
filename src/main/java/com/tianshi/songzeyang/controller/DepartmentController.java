@@ -2,33 +2,96 @@ package com.tianshi.songzeyang.controller;
 
 import com.tianshi.songzeyang.bean.Department;
 import com.tianshi.songzeyang.service.DepartmentService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import jakarta.annotation.Resource;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/department")
 public class DepartmentController {
 
-    @Autowired
+    @Resource
     private DepartmentService departmentService;
 
+    // 非空校验工具
+    private boolean isBlank(String str)
+    {
+        return str == null || str.trim().isEmpty();
+    }
+
+    /**
+     * 新增部门
+     */
     @PostMapping("/add")
-    public String addDepartment(@RequestBody Department department) {
-        try {
-            boolean result = departmentService.addDepartment(department);
-            if (result) {
-                return "新增部门成功，部门ID：" + department.getId();
-            } else {
-                return "新增部门失败";
-            }
-        } catch (IllegalArgumentException e) {
-            return e.getMessage();  // 如“部门名称不能为空”
-        } catch (Exception e) {
-            e.printStackTrace();
-            return "新增部门异常：" + e.getMessage();
+    public String add(@RequestBody Department department)
+    {
+        // 1. 参数完整性校验
+        if (isBlank(department.getDeptName())) {
+            return "新增失败！原因：部门名称不能为空";
         }
+        if (department.getStatus() == null) {
+            // 默认启用
+            department.setStatus(1);
+        }
+
+        // 2. 调用Service执行新增
+        boolean flag = departmentService.addDepartment(department);
+        if (flag) {
+            return "新增成功！";
+        } else {
+            return "新增失败！未知原因！";
+        }
+    }
+
+    /**
+     * 根据ID删除部门
+     */
+    @DeleteMapping("/delete/{id}")
+    public String delete(@PathVariable("id") Integer id)
+    {
+        if (id == null) return "删除失败！原因：部门ID为空";
+
+        boolean flag = departmentService.removeDepartmentById(id);
+        if (flag) {
+            return "删除成功！";
+        } else {
+            return "删除失败！原因：部门不存在";
+        }
+    }
+
+    /**
+     * 多条件更新部门
+     */
+    @PutMapping("/update/{id}")
+    public String update(@PathVariable("id") Integer id,
+                         @RequestBody Department department)
+    {
+        department.setId(id);
+
+        if (department.getId() == null) return "更新失败！原因：部门ID不能为空";
+
+        boolean flag = departmentService.modifyDepartment(department);
+        if (flag) {
+            return "更新成功！";
+        } else {
+            return "更新失败！原因：部门不存在";
+        }
+    }
+
+    /**
+     * 查询所有部门
+     */
+    @GetMapping("/list")
+    public List<Department> list() {
+        return departmentService.selectAll();
+    }
+
+    /**
+     * 多条件查询
+     */
+    @GetMapping("/condition")
+    public List<Department> queryCondition(Department department) {
+        return departmentService.queryDepartmentByCondition(department);
     }
 }

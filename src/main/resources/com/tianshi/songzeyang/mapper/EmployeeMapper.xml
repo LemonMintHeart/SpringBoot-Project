@@ -4,7 +4,6 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.tianshi.songzeyang.mapper.EmployeeMapper">
-
     <!-- 结果集映射 -->
     <resultMap id="EmployeeResultMap" type="Employee">
         <id column="id" property="id"/>
@@ -19,46 +18,46 @@
     </resultMap>
 
     <!-- 新增员工 -->
-    <insert id="insert" parameterType="Employee" useGeneratedKeys="true" keyProperty="id">
+    <insert id="insert" useGeneratedKeys="true" keyProperty="emp.id">
         INSERT INTO employee (emp_no, emp_name, gender, phone, email, department_id, status, hire_date)
-        VALUES (#{empNo}, #{empName}, #{gender}, #{phone}, #{email}, #{departmentId}, #{status}, #{hireDate})
+        VALUES (#{emp.empNo}, #{emp.empName}, #{emp.gender}, #{emp.phone}, #{emp.email}, #{emp.departmentId}, #{emp.status}, #{emp.hireDate})
     </insert>
 
     <!-- 根据ID删除员工 -->
-    <delete id="deleteById" parameterType="Integer">
+    <delete id="deleteById">
         DELETE FROM employee WHERE id = #{id}
     </delete>
 
     <!-- 多条件更新 -->
-    <update id="update" parameterType="Employee">
+    <update id="update">
         UPDATE employee
         <set>
-            <if test="empNo != null and empNo != ''">
-                emp_no = #{empNo},
+            <if test="emp.empNo != null and emp.empNo != ''">
+                emp_no = #{emp.empNo},
             </if>
-            <if test="empName != null and empName != ''">
-                emp_name = #{empName},
+            <if test="emp.empName != null and emp.empName != ''">
+                emp_name = #{emp.empName},
             </if>
-            <if test="gender != null">
-                gender = #{gender},
+            <if test="emp.gender != null">
+                gender = #{emp.gender},
             </if>
-            <if test="phone != null and phone != ''">
-                phone = #{phone},
+            <if test="emp.phone != null and emp.phone != ''">
+                phone = #{emp.phone},
             </if>
-            <if test="email != null and email != ''">
-                email = #{email},
+            <if test="emp.email != null and emp.email != ''">
+                email = #{emp.email},
             </if>
-            <if test="departmentId != null">
-                department_id = #{departmentId},
+            <if test="emp.departmentId != null">
+                department_id = #{emp.departmentId},
             </if>
-            <if test="status != null">
-                status = #{status},
+            <if test="emp.status != null">
+                status = #{emp.status},
             </if>
-            <if test="hireDate != null">
-                hire_date = #{hireDate}
+            <if test="emp.hireDate != null">
+                hire_date = #{emp.hireDate}
             </if>
         </set>
-        WHERE id = #{id}
+        WHERE id = #{emp.id}
     </update>
 
     <!-- 查询所有员工 -->
@@ -67,34 +66,33 @@
     </select>
 
     <!-- 多条件精确查询 -->
-    <select id="selectMultiCondition" parameterType="Employee" resultMap="EmployeeResultMap">
+    <select id="selectMultiCondition" resultMap="EmployeeResultMap">
         SELECT * FROM employee
         <where>
-            <if test="id != null">
-                AND id = #{id}
+            <if test="emp.id != null">
+                AND id = #{emp.id}
             </if>
-            <if test="empNo != null and empNo != ''">
-                AND emp_no = #{empNo}
+            <if test="emp.empNo != null and emp.empNo != ''">
+                AND emp_no = #{emp.empNo}
             </if>
-            <if test="empName != null and empName != ''">
-                AND emp_name = #{empName}
+            <if test="emp.empName != null and emp.empName != ''">
+                AND emp_name = #{emp.empName}
             </if>
-            <if test="gender != null">
-                AND gender = #{gender}
+            <if test="emp.gender != null">
+                AND gender = #{emp.gender}
             </if>
-            <if test="phone != null and phone != ''">
-                AND phone = #{phone}
+            <if test="emp.phone != null and emp.phone != ''">
+                AND phone = #{emp.phone}
             </if>
-            <if test="email != null and email != ''">
-                AND email = #{email}
+            <if test="emp.email != null and emp.email != ''">
+                AND email = #{emp.email}
             </if>
-            <if test="departmentId != null">
-                AND department_id = #{departmentId}
+            <if test="emp.departmentId != null">
+                AND department_id = #{emp.departmentId}
             </if>
-            <if test="status != null">
-                AND status = #{status}
+            <if test="emp.status != null">
+                AND status = #{emp.status}
             </if>
         </where>
     </select>
-
 </mapper>

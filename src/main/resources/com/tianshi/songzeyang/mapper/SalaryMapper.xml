@@ -4,8 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.tianshi.songzeyang.mapper.SalaryMapper">
-
-    <!-- 结果集映射 -->
+    <!-- 结果集映射 (假设你已将 pay_time 改回 pay_date，若未改请自行换回) -->
     <resultMap id="SalaryResultMap" type="Salary">
         <id column="id" property="id"/>
         <result column="employee_id" property="employeeId"/>
@@ -15,34 +14,34 @@
     </resultMap>
 
     <!-- 新增薪资记录 -->
-    <insert id="insert" parameterType="Salary" useGeneratedKeys="true" keyProperty="id">
+    <insert id="insert" useGeneratedKeys="true" keyProperty="salary.id">
         INSERT INTO salary (employee_id, salary_amount, pay_date, pay_status)
-        VALUES (#{employeeId}, #{salaryAmount}, #{payDate}, #{payStatus})
+        VALUES (#{salary.employeeId}, #{salary.salaryAmount}, #{salary.payDate}, #{salary.payStatus})
     </insert>
 
     <!-- 根据ID删除薪资记录 -->
-    <delete id="deleteById" parameterType="Integer">
+    <delete id="deleteById">
         DELETE FROM salary WHERE id = #{id}
     </delete>
 
-    <!-- 动态更新：仅修改非空属性 -->
-    <update id="update" parameterType="Salary">
+    <!-- 动态更新 -->
+    <update id="update">
         UPDATE salary
         <set>
-            <if test="employeeId != null">
-                employee_id = #{employeeId},
+            <if test="salary.employeeId != null">
+                employee_id = #{salary.employeeId},
             </if>
-            <if test="salaryAmount != null">
-                salary_amount = #{salaryAmount},
+            <if test="salary.salaryAmount != null">
+                salary_amount = #{salary.salaryAmount},
             </if>
-            <if test="payDate != null">
-                pay_time = #{payDate},
+            <if test="salary.payDate != null">
+                pay_date = #{salary.payDate},
             </if>
-            <if test="payStatus != null">
-                pay_status = #{payStatus}
+            <if test="salary.payStatus != null">
+                pay_status = #{salary.payStatus}
             </if>
         </set>
-        WHERE id = #{id}
+        WHERE id = #{salary.id}
     </update>
 
     <!-- 查询所有薪资记录 -->
@@ -50,26 +49,25 @@
         SELECT * FROM salary ORDER BY id ASC
     </select>
 
-    <!-- 多条件动态查询：仅拼接非空条件 -->
-    <select id="selectMultiCondition" parameterType="Salary" resultMap="SalaryResultMap">
+    <!-- 多条件动态查询 -->
+    <select id="selectMultiCondition" resultMap="SalaryResultMap">
         SELECT * FROM salary
         <where>
-            <if test="id != null">
-                AND id = #{id}
+            <if test="salary.id != null">
+                AND id = #{salary.id}
             </if>
-            <if test="employeeId != null">
-                AND employee_id = #{employeeId}
+            <if test="salary.employeeId != null">
+                AND employee_id = #{salary.employeeId}
             </if>
-            <if test="salaryAmount != null">
-                AND salary_amount = #{salaryAmount}
+            <if test="salary.salaryAmount != null">
+                AND salary_amount = #{salary.salaryAmount}
             </if>
-            <if test="payDate != null">
-                AND pay_date = #{payDate}
+            <if test="salary.payDate != null">
+                AND pay_date = #{salary.payDate}
             </if>
-            <if test="payStatus != null">
-                AND pay_status = #{payStatus}
+            <if test="salary.payStatus != null">
+                AND pay_status = #{salary.payStatus}
             </if>
         </where>
     </select>
-
 </mapper>

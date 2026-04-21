@@ -4,7 +4,6 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.tianshi.songzeyang.mapper.DepartmentMapper">
-
     <!-- 结果集映射 -->
     <resultMap id="DepartmentResultMap" type="Department">
         <id column="id" property="id"/>
@@ -15,31 +14,31 @@
     </resultMap>
 
     <!-- 新增部门 -->
-    <insert id="insert" parameterType="Department" useGeneratedKeys="true" keyProperty="id">
+    <insert id="insert" useGeneratedKeys="true" keyProperty="dept.id">
         INSERT INTO department (dept_name, manager_id, status)
-        VALUES (#{deptName}, #{managerId}, #{status})
+        VALUES (#{dept.deptName}, #{dept.managerId}, #{dept.status})
     </insert>
 
     <!-- 根据ID删除部门 -->
-    <delete id="deleteById" parameterType="Integer">
+    <delete id="deleteById">
         DELETE FROM department WHERE id = #{id}
     </delete>
 
     <!-- 多条件更新 -->
-    <update id="update" parameterType="Department">
+    <update id="update">
         UPDATE department
         <set>
-            <if test="deptName != null and deptName != ''">
-                dept_name = #{deptName},
+            <if test="dept.deptName != null and dept.deptName != ''">
+                dept_name = #{dept.deptName},
             </if>
-            <if test="managerId != null">
-                manager_id = #{managerId},
+            <if test="dept.managerId != null">
+                manager_id = #{dept.managerId},
             </if>
-            <if test="status != null">
-                status = #{status}
+            <if test="dept.status != null">
+                status = #{dept.status}
             </if>
         </set>
-        WHERE id = #{id}
+        WHERE id = #{dept.id}
     </update>
 
     <!-- 查询所有部门 -->
@@ -48,22 +47,21 @@
     </select>
 
     <!-- 多条件精确查询 -->
-    <select id="selectMultiCondition" parameterType="Department" resultMap="DepartmentResultMap">
+    <select id="selectMultiCondition" resultMap="DepartmentResultMap">
         SELECT * FROM department
         <where>
-            <if test="id != null">
-                AND id = #{id}
+            <if test="dept.id != null">
+                AND id = #{dept.id}
             </if>
-            <if test="deptName != null and deptName != ''">
-                AND dept_name = #{deptName}
+            <if test="dept.deptName != null and dept.deptName != ''">
+                AND dept_name = #{dept.deptName}
             </if>
-            <if test="managerId != null">
-                AND manager_id = #{managerId}
+            <if test="dept.managerId != null">
+                AND manager_id = #{dept.managerId}
             </if>
-            <if test="status != null">
-                AND status = #{status}
+            <if test="dept.status != null">
+                AND status = #{dept.status}
             </if>
         </where>
     </select>
-
 </mapper>

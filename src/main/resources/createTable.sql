@@ -30,3 +30,12 @@ CREATE TABLE employee (
     hire_date DATE COMMENT '入职日期',
     FOREIGN KEY (department_id) REFERENCES department(id) ON DELETE SET NULL
 ) COMMENT='员工表';
+
+-- 薪资表
+CREATE TABLE salary (
+    id INT PRIMARY KEY AUTO_INCREMENT COMMENT '薪资记录id',
+    employee_id INT NOT NULL COMMENT '员工ID',
+    salary_amount DECIMAL(10,2) NOT NULL COMMENT '薪资金额',
+    pay_date DATE COMMENT '发放日期',
+    pay_status TINYINT(1) NOT NULL DEFAULT 0 COMMENT '发放状态: 0-待发, 1-已发'
+) COMMENT='薪资表';

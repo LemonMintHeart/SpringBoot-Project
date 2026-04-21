@@ -3,54 +3,57 @@ package com.tianshi.songzeyang.service.impl;
 import com.tianshi.songzeyang.bean.Employee;
 import com.tianshi.songzeyang.mapper.EmployeeMapper;
 import com.tianshi.songzeyang.service.EmployeeService;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
-import org.springframework.util.CollectionUtils;
-import org.springframework.util.StringUtils;
-
 import java.util.List;
-import java.util.stream.Collectors;
 
-@Service("employeeService")
-public class EmployeeServiceImpl implements EmployeeService
-{
-    @Autowired
+@Service
+public class EmployeeServiceImpl implements EmployeeService {
+
+    @Resource
     private EmployeeMapper employeeMapper;
 
-    @Override
-    public List<Employee> getAllEmployees()
-    {
+    /**
+     * 新增员工
+     */
+    public boolean addEmployee(Employee employee) {
+        // 业务校验：工号和姓名非空
+        if (employee.getEmpNo() == null || employee.getEmpNo().trim().isEmpty() ||
+                employee.getEmpName() == null || employee.getEmpName().trim().isEmpty()) {
+            return false;
+        }
+        return employeeMapper.insert(employee) > 0;
+    }
+
+    /**
+     * 根据ID删除员工
+     */
+    public boolean removeEmployeeById(Integer id) {
+        return employeeMapper.deleteById(id) > 0;
+    }
+
+    /**
+     * 多条件更新员工
+     */
+    public boolean modifyEmployee(Employee employee) {
+        if (employee.getId() == null) {
+            return false;
+        }
+        return employeeMapper.update(employee) > 0;
+    }
+
+    /**
+     * 查询所有员工
+     */
+    public List<Employee> selectAll() {
         return employeeMapper.selectAll();
     }
 
-    @Override
-    public List<Employee> getEmployeesByName(String empName)
-    {
-        // 参数校验：name 不能为 null 或纯空格
-        if (!StringUtils.hasText(empName)) {
-            throw new IllegalArgumentException("员工姓名不能为空");
-        }
-
-        return employeeMapper.selectByName(empName);
+    /**
+     * 多条件精确查询（通用）
+     */
+    public List<Employee> queryEmployeeByCondition(Employee employee) {
+        return employeeMapper.selectMultiCondition(employee);
     }
 
-    @Override
-    public boolean deleteEmployeesByIds(List<Integer> ids)
-    {
-        // 参数校验：ids 不能为 null 或空集合
-        if (CollectionUtils.isEmpty(ids)) {
-            throw new IllegalArgumentException("要删除的员工ID列表不能为空");
-        }
-
-        // 过滤掉 null 或 <=0 的 id，如果过滤后为空也抛异常
-        List<Integer> validIds = ids.stream()
-                .filter(id -> id != null && id > 0)
-                .collect(Collectors.toList());
-        if (validIds.isEmpty()) {
-            throw new IllegalArgumentException("员工ID列表中没有有效的ID");
-        }
-
-        int rows = employeeMapper.deleteBatch(validIds);
-        return rows > 0;
-    }
 }

@@ -1,10 +1,11 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.tianshi.songzeyang.mapper.EmployeeMapper">
 
-    <!-- 结果映射 -->
+    <!-- 结果集映射 -->
     <resultMap id="EmployeeResultMap" type="Employee">
         <id column="id" property="id"/>
         <result column="emp_no" property="empNo"/>
@@ -17,28 +18,83 @@
         <result column="hire_date" property="hireDate"/>
     </resultMap>
 
+    <!-- 新增员工 -->
+    <insert id="insert" parameterType="Employee" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO employee (emp_no, emp_name, gender, phone, email, department_id, status, hire_date)
+        VALUES (#{empNo}, #{empName}, #{gender}, #{phone}, #{email}, #{departmentId}, #{status}, #{hireDate})
+    </insert>
+
+    <!-- 根据ID删除员工 -->
+    <delete id="deleteById" parameterType="Integer">
+        DELETE FROM employee WHERE id = #{id}
+    </delete>
+
+    <!-- 多条件更新 -->
+    <update id="update" parameterType="Employee">
+        UPDATE employee
+        <set>
+            <if test="empNo != null and empNo != ''">
+                emp_no = #{empNo},
+            </if>
+            <if test="empName != null and empName != ''">
+                emp_name = #{empName},
+            </if>
+            <if test="gender != null">
+                gender = #{gender},
+            </if>
+            <if test="phone != null and phone != ''">
+                phone = #{phone},
+            </if>
+            <if test="email != null and email != ''">
+                email = #{email},
+            </if>
+            <if test="departmentId != null">
+                department_id = #{departmentId},
+            </if>
+            <if test="status != null">
+                status = #{status},
+            </if>
+            <if test="hireDate != null">
+                hire_date = #{hireDate}
+            </if>
+        </set>
+        WHERE id = #{id}
+    </update>
+
     <!-- 查询所有员工 -->
     <select id="selectAll" resultMap="EmployeeResultMap">
-        SELECT id, emp_no, emp_name, gender, phone, email, department_id, status, hire_date
-        FROM employee
-        ORDER BY id
+        SELECT * FROM employee ORDER BY id ASC
     </select>
 
-    <!-- 模糊查询 -->
-    <select id="selectByName" resultMap="EmployeeResultMap">
-        SELECT id, emp_no, emp_name, gender, phone, email, department_id, status, hire_date
-        FROM employee
-        WHERE emp_name LIKE CONCAT('%', #{empName}, '%')
-        ORDER BY id
+    <!-- 多条件精确查询 -->
+    <select id="selectMultiCondition" parameterType="Employee" resultMap="EmployeeResultMap">
+        SELECT * FROM employee
+        <where>
+            <if test="id != null">
+                AND id = #{id}
+            </if>
+            <if test="empNo != null and empNo != ''">
+                AND emp_no = #{empNo}
+            </if>
+            <if test="empName != null and empName != ''">
+                AND emp_name = #{empName}
+            </if>
+            <if test="gender != null">
+                AND gender = #{gender}
+            </if>
+            <if test="phone != null and phone != ''">
+                AND phone = #{phone}
+            </if>
+            <if test="email != null and email != ''">
+                AND email = #{email}
+            </if>
+            <if test="departmentId != null">
+                AND department_id = #{departmentId}
+            </if>
+            <if test="status != null">
+                AND status = #{status}
+            </if>
+        </where>
     </select>
-
-    <!-- 批量删除 -->
-    <delete id="deleteBatch">
-        DELETE FROM employee
-        WHERE id IN
-        <foreach collection="ids" item="id" open="(" separator="," close=")">
-            #{id}
-        </foreach>
-    </delete>
 
 </mapper>

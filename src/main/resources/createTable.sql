@@ -1,6 +1,13 @@
 -- 使用数据库
 USE springboot_learning;
 
+-- 用户表
+CREATE TABLE user (
+    id INT AUTO_INCREMENT PRIMARY KEY COMMENT '用户ID',
+    username VARCHAR(20) NOT NULL UNIQUE COMMENT '用户名（唯一）',
+    password VARCHAR(20) NOT NULL COMMENT '密码'
+) COMMENT='用户表';
+
 -- 部门表
 CREATE TABLE department (
     id INT PRIMARY KEY AUTO_INCREMENT COMMENT '部门ID',

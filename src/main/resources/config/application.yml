@@ -1,7 +1,7 @@
 ---
 spring:
   application:
-    name: springboot-ex2
+    name: springboot-project
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://127.0.0.1:3306/springboot_learning?useUnicode=true&characterEncoding=utf-8

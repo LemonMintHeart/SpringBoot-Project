@@ -116,6 +116,23 @@ public class UserController {
     }
 
     /**
+     * 批量删除用户
+     */
+    @DeleteMapping("/delete/batch")
+    public String deleteBatch(@RequestParam List<Integer> ids)
+    {
+        if (ids == null || ids.isEmpty()) {
+            return "批量删除失败！原因：ID列表不能为空";
+        }
+        boolean flag = userService.removeUsersByIds(ids);
+        if (flag) {
+            return "批量删除成功！";
+        } else {
+            return "批量删除失败！未知原因！";
+        }
+    }
+
+    /**
      * 更新用户
      */
     @PutMapping("/update/{id}")

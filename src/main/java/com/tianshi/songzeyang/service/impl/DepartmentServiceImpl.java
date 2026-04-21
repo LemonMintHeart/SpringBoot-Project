@@ -33,6 +33,16 @@ public class DepartmentServiceImpl implements DepartmentService {
     }
 
     /**
+     * 批量删除部门
+     */
+    public boolean removeDepartmentsByIds(List<Integer> ids) {
+        if (ids == null || ids.isEmpty()) {
+            return false;
+        }
+        return departmentMapper.deleteByIds(ids) > 0;
+    }
+
+    /**
      * 多条件更新部门
      */
     public boolean modifyDepartment(Department department) {

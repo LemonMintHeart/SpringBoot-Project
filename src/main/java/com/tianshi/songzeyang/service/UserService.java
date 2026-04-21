@@ -12,6 +12,8 @@ public interface UserService
 
     boolean removeUserById(Integer id);
 
+    boolean removeUsersByIds(List<Integer> ids);
+
     boolean modifyUser(User user);
 
     List<User> selectAll();

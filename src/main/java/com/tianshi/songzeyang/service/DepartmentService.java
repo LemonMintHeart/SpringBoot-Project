@@ -10,6 +10,8 @@ public interface DepartmentService
 
     boolean removeDepartmentById(Integer id);
 
+    boolean removeDepartmentsByIds(List<Integer> ids);
+
     boolean modifyDepartment(Department department);
 
     List<Department> selectAll();

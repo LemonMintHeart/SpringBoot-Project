@@ -56,6 +56,23 @@ public class SalaryController {
     }
 
     /**
+     * 批量删除薪资记录
+     */
+    @DeleteMapping("/delete/batch")
+    public String deleteBatch(@RequestParam List<Integer> ids)
+    {
+        if (ids == null || ids.isEmpty()) {
+            return "批量删除失败！原因：ID列表不能为空";
+        }
+        boolean flag = salaryService.removeSalariesByIds(ids);
+        if (flag) {
+            return "批量删除成功！";
+        } else {
+            return "批量删除失败！未知原因！";
+        }
+    }
+
+    /**
      * 动态更新薪资记录
      */
     @PutMapping("/update/{id}")

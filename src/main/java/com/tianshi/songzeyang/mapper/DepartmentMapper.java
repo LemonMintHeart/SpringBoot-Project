@@ -14,6 +14,9 @@ public interface DepartmentMapper
     // 根据ID删除部门
     int deleteById(@Param("id") Integer id);
 
+    // 批量删除用户
+    int deleteByIds(@Param("ids") List<Integer> ids);
+
     // 多条件更新
     int update(@Param("dept") Department department);
 

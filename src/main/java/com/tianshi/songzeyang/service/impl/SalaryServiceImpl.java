@@ -32,6 +32,16 @@ public class SalaryServiceImpl implements SalaryService {
     }
 
     /**
+     * 批量删除薪资记录
+     */
+    public boolean removeSalariesByIds(List<Integer> ids) {
+        if (ids == null || ids.isEmpty()) {
+            return false;
+        }
+        return salaryMapper.deleteByIds(ids) > 0;
+    }
+
+    /**
      * 动态更新薪资记录
      */
     public boolean modifySalary(Salary salary) {

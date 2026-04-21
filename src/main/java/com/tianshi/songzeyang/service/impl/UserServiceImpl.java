@@ -41,6 +41,16 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
+     * 批量删除用户
+     */
+    public boolean removeUsersByIds(List<Integer> ids) {
+        if (ids == null || ids.isEmpty()) {
+            return false;
+        }
+        return userMapper.deleteByIds(ids) > 0;
+    }
+
+    /**
      * 多条件更新用户
      */
     public boolean modifyUser(User user) {

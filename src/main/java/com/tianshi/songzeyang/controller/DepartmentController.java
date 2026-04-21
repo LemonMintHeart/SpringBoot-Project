@@ -61,6 +61,23 @@ public class DepartmentController {
     }
 
     /**
+     * 批量删除部门
+     */
+    @DeleteMapping("/delete/batch")
+    public String deleteBatch(@RequestParam List<Integer> ids)
+    {
+        if (ids == null || ids.isEmpty()) {
+            return "批量删除失败！原因：ID列表不能为空";
+        }
+        boolean flag = departmentService.removeDepartmentsByIds(ids);
+        if (flag) {
+            return "批量删除成功！";
+        } else {
+            return "批量删除失败！未知原因！";
+        }
+    }
+
+    /**
      * 多条件更新部门
      */
     @PutMapping("/update/{id}")

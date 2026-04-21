@@ -33,6 +33,16 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     /**
+     * 批量删除员工
+     */
+    public boolean removeEmployeesByIds(List<Integer> ids) {
+        if (ids == null || ids.isEmpty()) {
+            return false;
+        }
+        return employeeMapper.deleteByIds(ids) > 0;
+    }
+
+    /**
      * 多条件更新员工
      */
     public boolean modifyEmployee(Employee employee) {

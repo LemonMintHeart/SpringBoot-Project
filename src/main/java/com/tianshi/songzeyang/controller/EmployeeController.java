@@ -96,11 +96,17 @@ public class EmployeeController {
     }
 
     /**
-     * 查询所有员工
-     */
+     * 根据姓名模糊查询
+     **/
     @GetMapping("/list")
-    public List<Employee> list() {
-        return employeeService.selectAll();
+    public List<Employee> list(@RequestParam(required = false) String empName) {
+        if (isBlank(empName)) {
+            // 无参数：查询所有员工
+            return employeeService.selectAll();
+        } else {
+            // 有参数：按姓名模糊查询
+            return employeeService.queryEmployeeByEmpNameLike(empName);
+        }
     }
 
     /**

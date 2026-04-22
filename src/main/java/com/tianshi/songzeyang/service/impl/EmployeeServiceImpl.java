@@ -60,7 +60,15 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     /**
-     * 多条件精确查询（通用）
+     * 根据姓名模糊查询
+     */
+    @Override
+    public List<Employee> queryEmployeeByEmpNameLike(String empName) {
+        return employeeMapper.selectByEmpNameLike(empName);
+    }
+
+    /**
+     * 多条件精确查询
      */
     public List<Employee> queryEmployeeByCondition(Employee employee) {
         return employeeMapper.selectMultiCondition(employee);

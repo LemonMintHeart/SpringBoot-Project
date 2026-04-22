@@ -23,6 +23,9 @@ public interface EmployeeMapper
     // 查询所有员工
     List<Employee> selectAll();
 
+    // 根据姓名模糊查询
+    List<Employee> selectByEmpNameLike(@Param("empName") String empName);
+
     // 多条件查询
     List<Employee> selectMultiCondition(@Param("emp") Employee employee);
 }

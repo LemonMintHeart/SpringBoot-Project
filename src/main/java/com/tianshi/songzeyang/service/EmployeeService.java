@@ -15,5 +15,7 @@ public interface EmployeeService
 
     List<Employee> selectAll();
 
+    List<Employee> queryEmployeeByEmpNameLike(String empName);
+
     List<Employee> queryEmployeeByCondition(Employee employee);
 }

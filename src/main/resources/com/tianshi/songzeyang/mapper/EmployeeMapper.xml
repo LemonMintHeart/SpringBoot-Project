@@ -73,6 +73,12 @@
         SELECT * FROM employee ORDER BY id ASC
     </select>
 
+    <!-- 根据姓名模糊查询 -->
+    <select id="selectByEmpNameLike" resultMap="EmployeeResultMap">
+        SELECT * FROM employee
+        WHERE emp_name LIKE CONCAT('%', #{empName}, '%')
+    </select>
+
     <!-- 多条件精确查询 -->
     <select id="selectMultiCondition" resultMap="EmployeeResultMap">
         SELECT * FROM employee

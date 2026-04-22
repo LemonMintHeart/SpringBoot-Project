@@ -24,7 +24,7 @@
         DELETE FROM salary WHERE id = #{id}
     </delete>
 
-    <!-- 【新增】批量删除薪资记录 -->
+    <!-- 批量删除薪资记录 -->
     <delete id="deleteByIds">
         DELETE FROM salary WHERE id IN
         <foreach collection="ids" item="id" open="(" separator="," close=")">

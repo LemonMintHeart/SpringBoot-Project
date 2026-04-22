@@ -7,6 +7,23 @@ spring:
     url: jdbc:mysql://127.0.0.1:3306/springboot_learning?useUnicode=true&characterEncoding=utf-8
     username: root
     password: 0924
+  mvc:
+    view:
+      prefix: /WEB-INF/views/
+      suffix: .jsp
+  mail:
+    host: smtp.qq.com
+    port: 587
+    username: 3539567386@qq.com
+    password: zypcmfrceouodbia
+    protocol: smtp
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
 
 ---
 mybatis:

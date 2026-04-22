@@ -27,6 +27,7 @@ public class SalaryServiceImpl implements SalaryService {
     /**
      * 根据ID删除薪资记录
      */
+    @Override
     public boolean removeSalaryById(Integer id) {
         return salaryMapper.deleteById(id) > 0;
     }
@@ -34,6 +35,7 @@ public class SalaryServiceImpl implements SalaryService {
     /**
      * 批量删除薪资记录
      */
+    @Override
     public boolean removeSalariesByIds(List<Integer> ids) {
         if (ids == null || ids.isEmpty()) {
             return false;
@@ -44,6 +46,7 @@ public class SalaryServiceImpl implements SalaryService {
     /**
      * 动态更新薪资记录
      */
+    @Override
     public boolean modifySalary(Salary salary) {
         if (salary.getId() == null) {
             return false;
@@ -54,6 +57,7 @@ public class SalaryServiceImpl implements SalaryService {
     /**
      * 查询所有薪资记录
      */
+    @Override
     public List<Salary> selectAll() {
         return salaryMapper.selectAll();
     }
@@ -61,6 +65,7 @@ public class SalaryServiceImpl implements SalaryService {
     /**
      * 多条件动态查询
      */
+    @Override
     public List<Salary> querySalaryByCondition(Salary salary) {
         return salaryMapper.selectMultiCondition(salary);
     }

@@ -16,6 +16,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     /**
      * 新增员工
      */
+    @Override
     public boolean addEmployee(Employee employee) {
         // 业务校验：工号和姓名非空
         if (employee.getEmpNo() == null || employee.getEmpNo().trim().isEmpty() ||
@@ -28,6 +29,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     /**
      * 根据ID删除员工
      */
+    @Override
     public boolean removeEmployeeById(Integer id) {
         return employeeMapper.deleteById(id) > 0;
     }
@@ -35,6 +37,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     /**
      * 批量删除员工
      */
+    @Override
     public boolean removeEmployeesByIds(List<Integer> ids) {
         if (ids == null || ids.isEmpty()) {
             return false;
@@ -45,6 +48,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     /**
      * 多条件更新员工
      */
+    @Override
     public boolean modifyEmployee(Employee employee) {
         if (employee.getId() == null) {
             return false;
@@ -55,6 +59,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     /**
      * 查询所有员工
      */
+    @Override
     public List<Employee> selectAll() {
         return employeeMapper.selectAll();
     }
@@ -70,6 +75,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     /**
      * 多条件精确查询
      */
+    @Override
     public List<Employee> queryEmployeeByCondition(Employee employee) {
         return employeeMapper.selectMultiCondition(employee);
     }

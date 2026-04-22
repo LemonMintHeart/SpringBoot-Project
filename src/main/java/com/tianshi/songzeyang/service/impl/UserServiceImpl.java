@@ -17,6 +17,7 @@ public class UserServiceImpl implements UserService {
     /**
      * 用户注册
      */
+    @Override
     public boolean register(User user) {
         // 业务校验：用户名已存在，抛出异常
         return userMapper.insert(user) > 0;
@@ -25,6 +26,7 @@ public class UserServiceImpl implements UserService {
     /**
      * 用户登录
      */
+    @Override
     public User login(String username, String password) {
         User condition = new User();
         condition.setUsername(username);
@@ -36,6 +38,7 @@ public class UserServiceImpl implements UserService {
     /**
      * 根据ID删除用户
      */
+    @Override
     public boolean removeUserById(Integer id) {
         return userMapper.deleteById(id) > 0;
     }
@@ -43,6 +46,7 @@ public class UserServiceImpl implements UserService {
     /**
      * 批量删除用户
      */
+    @Override
     public boolean removeUsersByIds(List<Integer> ids) {
         if (ids == null || ids.isEmpty()) {
             return false;
@@ -53,6 +57,7 @@ public class UserServiceImpl implements UserService {
     /**
      * 多条件更新用户
      */
+    @Override
     public boolean modifyUser(User user) {
         if (user.getId() == null) {
             return false;
@@ -63,6 +68,7 @@ public class UserServiceImpl implements UserService {
     /**
      * 查询所有用户
      */
+    @Override
     public List<User> selectAll() {
         return userMapper.selectAll();
     }
@@ -70,6 +76,7 @@ public class UserServiceImpl implements UserService {
     /**
      * 用户名模糊查询
      */
+    @Override
     public List<User> queryUserByUsernameLike(String username) {
         return userMapper.selectByUsernameLike(username);
     }
@@ -77,6 +84,7 @@ public class UserServiceImpl implements UserService {
     /**
      * 多条件精确查询（通用）
      */
+    @Override
     public User queryUserByCondition(User user) {
         return userMapper.selectMultiCondition(user);
     }
@@ -84,6 +92,7 @@ public class UserServiceImpl implements UserService {
     /**
      * 检查用户名是否存在
      */
+    @Override
     public boolean checkUsernameExist(String username) {
         User condition = new User();
         condition.setUsername(username);
@@ -93,6 +102,7 @@ public class UserServiceImpl implements UserService {
     /**
      * 验证用户名和密码是否匹配
      */
+    @Override
     public boolean verifyUsernameAndPassword(String username, String password) {
         User condition = new User();
         condition.setUsername(username);

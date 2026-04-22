@@ -28,8 +28,7 @@ CREATE TABLE employee (
     email VARCHAR(20) COMMENT '邮箱',
     department_id INT COMMENT '部门ID',
     status TINYINT(1) NOT NULL DEFAULT 1 COMMENT '状态: 1-在职, 2-试用期, 3-离职, 4-休假',
-    hire_date DATE COMMENT '入职日期',
-    FOREIGN KEY (department_id) REFERENCES department(id) ON DELETE SET NULL
+    hire_date DATE COMMENT '入职日期'
 ) COMMENT='员工表';
 
 -- 薪资表

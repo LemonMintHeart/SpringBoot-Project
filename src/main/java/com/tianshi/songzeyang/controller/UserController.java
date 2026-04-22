@@ -30,13 +30,6 @@ public class UserController {
         return str == null || str.trim().isEmpty();
     }
 
-    // 新增这个测试方法
-    @GetMapping("/test")
-    @ResponseBody
-    public String test() {
-        return "Controller is OK! Now check JSP path.";
-    }
-
     // 图片验证码生成
     @GetMapping("/getCode")
     public void getCode(HttpSession session, HttpServletResponse response) throws IOException
